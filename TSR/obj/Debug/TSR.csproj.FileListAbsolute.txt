@@ -1,0 +1,15 @@
+C:\Projects\TSRdotNet\TSR\bin\Debug\TSR.exe.config
+C:\Projects\TSRdotNet\TSR\bin\Debug\TSR.exe
+C:\Projects\TSRdotNet\TSR\bin\Debug\TSR.pdb
+C:\Projects\TSRdotNet\TSR\obj\Debug\TSR.csprojAssemblyReference.cache
+C:\Projects\TSRdotNet\TSR\obj\Debug\MainWindow.g.cs
+C:\Projects\TSRdotNet\TSR\obj\Debug\App.g.cs
+C:\Projects\TSRdotNet\TSR\obj\Debug\TSR_MarkupCompile.cache
+C:\Projects\TSRdotNet\TSR\obj\Debug\TSR_MarkupCompile.lref
+C:\Projects\TSRdotNet\TSR\obj\Debug\MainWindow.baml
+C:\Projects\TSRdotNet\TSR\obj\Debug\TSR.g.resources
+C:\Projects\TSRdotNet\TSR\obj\Debug\TSR.Properties.Resources.resources
+C:\Projects\TSRdotNet\TSR\obj\Debug\TSR.csproj.GenerateResource.cache
+C:\Projects\TSRdotNet\TSR\obj\Debug\TSR.csproj.CoreCompileInputs.cache
+C:\Projects\TSRdotNet\TSR\obj\Debug\TSR.exe
+C:\Projects\TSRdotNet\TSR\obj\Debug\TSR.pdb
