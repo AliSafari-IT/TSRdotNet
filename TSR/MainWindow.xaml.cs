@@ -53,51 +53,9 @@ namespace TSR
         private void importCSVFile_Click (object sender, RoutedEventArgs e)
             {
             Console.WriteLine ("\n\n********** Getting the header fields of the loaded time series. *************\n");
-            delimiterSPanel.IsEnabled = true;
-            delimiter = GetDelimiter ();
+            TSAnalyze tsa = new TSAnalyze();
+            tsa.ShowDialog ();
 
-                       Console.WriteLine ("\n\n********** REngine.GetInstance(RDotNet) *************\n");
-            REngine.SetEnvironmentVariables (); // <-- May be omitted; the next line would call it.
-            REngine engine = REngine.GetInstance();
-            // A somewhat contrived but customary Hello World:
-            CharacterVector charVec = engine.CreateCharacterVector(new[] { "Hello, R world!, .NET speaking" });
-            engine.SetSymbol ("greetings", charVec);
-            engine.Evaluate ("str(greetings)"); // print out in the console
-            string[] a = engine.Evaluate("'Hi there .NET, from the R engine'").AsCharacter().ToArray();
-            Console.WriteLine ("R answered: '{0}'", a[0]);
-            Console.WriteLine ("Press any key to exit the program");
-            Console.ReadKey ();
-            engine.Dispose ();
-
-            try
-                {
-                // import csv file
-                engine.Evaluate ("library(datasets)");
-                engine.Evaluate ("dataset<-read.table(file.choose(), header=TRUE, sep = ',')");
-
-                engine.Evaluate ("dataset1 <- read.csv(file = '"+TextBox_Browse.Text+"', header = TRUE, sep = ',', stringsAsFactors = FALSE)");
-
-                DataFrame dataset1 = engine.GetSymbol("dataset1").AsDataFrame();
-
-                // retrieve the data frame
-                DataFrame dataset = engine.Evaluate("dataset").AsDataFrame();
-                for (int i = 0; i < dataset.ColumnCount; ++i)
-                    {
-
-                    }
-
-                for (int i = 0; i < dataset.RowCount; ++i)
-                    {
-                    Console.WriteLine ("i: " + i);
-
-                    }
-
-                }
-
-            catch
-                {
-                MessageBox.Show (@"Equation error.");
-                }
 
             }
 
