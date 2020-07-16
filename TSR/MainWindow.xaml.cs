@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,33 @@ namespace TSR
             {
             InitializeComponent ();
             }
+
+        private void TextBox_Browse_PreviewMouseDown (object sender, MouseButtonEventArgs e)
+            {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = System.IO.Path.GetDirectoryName (System.Diagnostics.Process.GetCurrentProcess ().MainModule.FileName);
+
+            if (openFileDialog.ShowDialog () == true)
+                {
+                TextBox_Browse.Text = openFileDialog.FileName;
+                TextBox_Browse.Height = 40;
+                TextBox_Browse.FontSize = 12;
+                importCSVFile.Visibility = Visibility.Visible;
+                TextBox_Browse.ToolTip = "Click again to select another file";
+                importCSVFile.IsEnabled = true;
+                }
+            }
+
+        private void importCSVFile_Click (object sender, RoutedEventArgs e)
+            {
+            Console.WriteLine ("Moving to the next window: ");
+
+            //TS_LoadData loadData = new TS_LoadData(this);
+
+            //loadData.ShowDialog ();
+
+            }
         }
+
     }

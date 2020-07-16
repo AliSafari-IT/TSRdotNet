@@ -13,3 +13,11 @@ C:\Projects\TSRdotNet\TSR\obj\Debug\TSR.csproj.GenerateResource.cache
 C:\Projects\TSRdotNet\TSR\obj\Debug\TSR.csproj.CoreCompileInputs.cache
 C:\Projects\TSRdotNet\TSR\obj\Debug\TSR.exe
 C:\Projects\TSRdotNet\TSR\obj\Debug\TSR.pdb
+C:\Projects\TSRdotNet\TSR\bin\Debug\DynamicInterop.dll
+C:\Projects\TSRdotNet\TSR\bin\Debug\Microsoft.Win32.Registry.dll
+C:\Projects\TSRdotNet\TSR\bin\Debug\RDotNet.dll
+C:\Projects\TSRdotNet\TSR\bin\Debug\System.Security.AccessControl.dll
+C:\Projects\TSRdotNet\TSR\bin\Debug\System.Security.Principal.Windows.dll
+C:\Projects\TSRdotNet\TSR\bin\Debug\DynamicInterop.xml
+C:\Projects\TSRdotNet\TSR\bin\Debug\RDotNet.xml
+C:\Projects\TSRdotNet\TSR\obj\Debug\TSR.csproj.CopyComplete
