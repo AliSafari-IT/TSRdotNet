@@ -22,16 +22,12 @@ namespace TSR
     /// </summary>
     public partial class MainWindow : Window
         {
-        private REngine engine;
-
-        public char delimiter { get; private set; }
+        public char delimiter;
+        public string fileName;
 
         public MainWindow ()
             {
             InitializeComponent ();
-            // There are several options to initialize thengine, but by default the following suffice:
-            engine = REngine.GetInstance ();
-            engine.Initialize ();
             }
 
         private void TextBox_Browse_PreviewMouseDown (object sender, MouseButtonEventArgs e)
@@ -43,23 +39,26 @@ namespace TSR
             if (openFileDialog.ShowDialog () == true)
                 {
                 TextBox_Browse.Text = openFileDialog.FileName;
-                TextBox_Browse.Height = 40;
-                TextBox_Browse.FontSize = 12;
+                TextBox_Browse.Height = 50;
+                TextBox_Browse.FontSize = 11;
                 TextBox_Browse.ToolTip = "Click again to select another file";
                 importCSVFile.IsEnabled = true;
+                delimiterSPanel.IsEnabled = true;
                 }
             }
 
         private void importCSVFile_Click (object sender, RoutedEventArgs e)
             {
             Console.WriteLine ("\n\n********** Getting the header fields of the loaded time series. *************\n");
-            TSAnalyze tsa = new TSAnalyze();
+            delimiter = GetDelimiter ();
+            fileName = TextBox_Browse.Text;
+
+            TSAnalyze tsa = new TSAnalyze(this);
+
             tsa.ShowDialog ();
-
-
             }
 
-        private char GetDelimiter ()
+        public char GetDelimiter ()
             {
             if (semicolonDelimiter.IsChecked == true)
                 {
@@ -96,6 +95,7 @@ namespace TSR
         private void PrepareNeededTS_Click (object sender, RoutedEventArgs e)
             {
             Console.WriteLine ("\n\n********** Preparing the time series needed for the next step *************\n");
+
 
             }
 

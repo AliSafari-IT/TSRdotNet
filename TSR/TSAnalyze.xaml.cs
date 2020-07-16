@@ -15,73 +15,75 @@ namespace TSR
     public partial class TSAnalyze : Window
         {
         private string fileName;
+        private MainWindow mainWindow;
+        private string[] headers;
+        private string selectedTimeSeries;
+        private char delimiter;
 
-        public TSAnalyze ()
+        public TSAnalyze (MainWindow mainWindow)
             {
+            this.mainWindow = mainWindow;
+            fileName = mainWindow.fileName;
             InitializeComponent ();
-            // There are several options to initialize thengine, but by default the following suffice:
-            REngine engine = REngine.GetInstance();
+            Console.WriteLine ("File name is: " + fileName);
 
-            //init the R engine            
-            REngine.SetEnvironmentVariables ();
-            engine = REngine.GetInstance ();
-            engine.Initialize ();
+            delimiter = mainWindow.delimiter;
 
-
-            //prepare data
-            List<int> size = new List<int>() { 29, 33, 51, 110, 357, 45, 338, 543, 132, 70, 103, 301, 146, 10, 56, 243, 238 };
-            List<int> population = new List<int>() { 3162, 11142, 3834, 7305, 81890, 1339, 5414, 65697, 11280, 4589, 320, 60918, 480, 1806, 4267, 63228, 21327 };
-
-            var docPath = Directory.GetCurrentDirectory();
-            //var myDir = $@"{docPath}\output";
-            var myDir = bingPathToAppDir ("output");
-
-            Directory.CreateDirectory (myDir);
-
-            Console.WriteLine (Directory.Exists (myDir));
-            Console.WriteLine (myDir);
-            Console.WriteLine (bingPathToAppDir ("output"));
-
-            Console.WriteLine ("my image location {0}", myDir);
-
-            fileName = myDir + "\\myplot.png";
-
-            //calculate
-            IntegerVector sizeVector = engine.CreateIntegerVector(size);
-            engine.SetSymbol ("size", sizeVector);
-
-            IntegerVector populationVector = engine.CreateIntegerVector(population);
-            engine.SetSymbol ("population", populationVector);
-
-            CharacterVector fileNameVector = engine.CreateCharacterVector(new[] { fileName });
-            engine.SetSymbol ("fileName", fileNameVector);
-
-            engine.Evaluate ("reg <- lm(population~size)");
-            engine.Evaluate ("png(filename=fileName, width=6, height=6, units='in', res=100)");
-            engine.Evaluate ("plot(population~size)");
-            engine.Evaluate ("abline(reg)");
-            engine.Evaluate ("dev.off()");
-
-            //clean up
-            engine.Dispose ();
-
-            //output
-            Console.WriteLine ("");
-            Console.WriteLine ("Press any key to exit");
-            Console.ReadKey ();
-
-
+            loadComboBoxItems ();
 
             }
 
-        public static string bingPathToAppDir (string localPath)
+
+        private void headersComboList_SelectionChanged (object sender, System.Windows.Controls.SelectionChangedEventArgs e)
             {
-            string currentDir = Environment.CurrentDirectory;
-            DirectoryInfo directory = new DirectoryInfo(
-        Path.GetFullPath(Path.Combine(currentDir, @"..\..\" + localPath)));
-            return directory.ToString ();
+            selectedTimeSeries = e.AddedItems[0].ToString ();
+            Console.WriteLine ("\nSelected time seris is " + selectedTimeSeries + "\n");
+            }
+
+        private void loadComboBoxItems ()
+            {
+            string[] headers=getCSV_Header (fileName, delimiter);
+
+            Console.WriteLine ("Number of columns: {0}.", headers.Length);
+            //MessageBox.Show ("number of columns " + headers.Length, "Verifying the choice of list separator ", (MessageBoxButton) MessageBoxButtons.OKCancel);
+
+            //Fill in the Combo Box for choosing the time series to extract from the source file
+            foreach (string colName in headers)
+                {
+                headersComboList.Items.Add (colName);
+                }
+            headersComboList.SelectedItem = headers[headers.Length - 1];
+            }
+
+        // returns an array of strings representing the different fields of the csv file
+        public string[] getCSV_Header (string filename, char delimiter)
+            {
+            StreamReader fileReader = null;
+            try
+                {
+                fileReader = new StreamReader (@filename);
+                }
+            catch (FileNotFoundException)
+                {
+                return null;
+                }
+            string header = fileReader.ReadLine();
+            header = header.Replace ('"', ' ');
+            Console.WriteLine ("selectedTimeSeries delimiter is: "+delimiter);
+            headers = header.Split (delimiter).Select (s => s.Trim ()).Where (s => s != String.Empty).ToArray ();
+
+            headers.ToList ().ForEach (i => Console.WriteLine (i.ToString ()));
+            Console.WriteLine ("[{0}]", string.Join (", ", headers));
+
+            fileReader.Close ();
+            return headers;
+            }
+
+        private void previousButton_Click (object sender, RoutedEventArgs e)
+            {
+            this.Close ();
+            mainWindow.Show ();
             }
         }
 
-        }
     }
