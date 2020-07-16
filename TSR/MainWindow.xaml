@@ -108,7 +108,7 @@
         </Style>
     </Window.Resources>
 
-    <Border Margin="15,15,15,15">
+    <Border Margin="0">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100*"/>
@@ -237,7 +237,121 @@
                 FontWeight="DemiBold"
                 />
 
+            <StackPanel 
+                x:Name="delimiterSPanel"  
+                Margin="20"                 
+                Orientation="Vertical" 
+                Grid.ColumnSpan="10" 
+                Grid.Row="5" 
+                Grid.RowSpan="5" 
+                Height="180" 
+                VerticalAlignment="Top"   
+                IsEnabled="False"
+                >
+                <Label  
+                    Content="CSV list separator"
+                    FontWeight="DemiBold"
+                    HorizontalAlignment="Left" Height="36"
+                    />
+                <WrapPanel Orientation="Horizontal" Margin="5" Height="44">
+
+                    <RadioButton 
+                    x:Name="commaDelimiter" 
+                    Content="Comma"
+                    IsChecked="True"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    GroupName="separatorList" Width="150"
+                    />
+
+                    <RadioButton 
+                    x:Name="semicolonDelimiter" 
+                    Content="Semicolon"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    GroupName="separatorList"
+                    HorizontalAlignment="Right" 
+                    Width="150"     
+                    />
+
+                    <RadioButton 
+                    x:Name="tabDelimiter" 
+                    Content="Tab"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    GroupName="separatorList"
+                    Width="150"     
+                    />
+
+                    <RadioButton 
+                    x:Name="spaceDelimiter"
+                    Content="Space"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    GroupName="separatorList"
+                    Width="150"     
+                    />
+
+                </WrapPanel>
+                <StackPanel 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,0"
+                    >
+                    <TextBlock 
+                    Text="Other separator"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                     />
+
+                    <TextBox
+                        x:Name="OtherDelimiter"
+                        Width="30"
+                        Margin="10 0 0 0"
+                        MaxLength="1"
+                        LostFocus="OtherDelimiter_LostFocus"
+                        HorizontalContentAlignment="Center" 
+                        VerticalContentAlignment="Center" 
+                        VerticalAlignment="Center"
+                        />
+                </StackPanel>
+                <StackPanel 
+                    Background="DarkSlateGray" 
+                    Width="160"
+                    Margin="275,15,275,5"
+                    >
+                    <Button 
+                        x:Name="PrepareNeededTS"                        
+                        Margin="1"
+                        BorderBrush="DarkSlateGray"
+                        BorderThickness="1"
+                        Background="DarkSlateGray"
+                        Foreground="YellowGreen"
+                        FontWeight="DemiBold"
+                        Content="Prepare Time Series"
+                        VerticalContentAlignment="Center"
+                        Click="PrepareNeededTS_Click"
+                        >
+                        <Button.Resources>
+                            <Style TargetType="{x:Type ToolTip}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ToolTip}">
+                                            <Grid Margin="0,60,0,0">
+                                                <Path Data="M0 0 30 0 50 -15 70 0 100 0 100 30 0 30z" Fill="#3E82C4" Stretch="Fill"/>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,8"/>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+
         </Grid>
+
     </Border>
 
 </Window>
