@@ -9,11 +9,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace TSR
     {
@@ -39,11 +42,15 @@ namespace TSR
             if (openFileDialog.ShowDialog () == true)
                 {
                 TextBox_Browse.Text = openFileDialog.FileName;
-                TextBox_Browse.Height = 50;
                 TextBox_Browse.FontSize = 11;
                 TextBox_Browse.ToolTip = "Click again to select another file";
+
                 importCSVFile.IsEnabled = true;
                 delimiterSPanel.IsEnabled = true;
+                
+                next_open_csv.Visibility = Visibility.Hidden;
+
+                next_list_delimiter.Visibility = Visibility.Visible;
                 }
             }
 
@@ -99,5 +106,9 @@ namespace TSR
 
             }
 
+        private void TextBox_Browse_TextChanged (object sender, TextChangedEventArgs e)
+            {
+            
+            }
         }
     }

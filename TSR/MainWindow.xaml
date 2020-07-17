@@ -145,29 +145,28 @@
                 FontSize="30" FontWeight="Bold" Grid.Row="1"  
                 FontFamily="Comic Sans"
                 />
+            <Path 
+                x:Name="next_open_csv"
+                Grid.Row="3"
+                Fill="Black" 
+                Data="M 3,3 l 9,9 l -9,9 Z"                      
+                Stretch="Uniform" 
+                HorizontalAlignment="Stretch"
+                />
             <StackPanel 
                 Orientation="Horizontal"
                 Grid.Column="1"
                 Grid.Row="3"
                 Grid.ColumnSpan="8"
-                Height="50"
                >
-                <Path 
-                    Fill="Black" 
-                    Data="M 3,3 l 9,9 l -9,9 Z" 
-                    Margin="0,0,0,10" 
-                    Stretch="Uniform" 
-                    RenderTransformOrigin="0.753,-0.719" 
-                    Width="47.01"  
-                    Height="40"
-                    VerticalAlignment="Center"
-                />
+
                 <TextBox 
                     x:Name="TextBox_Browse" 
-                    HorizontalAlignment="Center"                  
-                    VerticalAlignment="Center" 
-                    HorizontalContentAlignment="Center" 
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="6"
                     VerticalContentAlignment="Center" 
+                    HorizontalContentAlignment="Center"
                     BorderThickness="0" 
                     Text="Browse for a CSV time series file" 
                     TextWrapping="Wrap" 
@@ -177,11 +176,9 @@
                     FontStretch="UltraExpanded"
                     Cursor="Hand" 
                     PreviewMouseDown="TextBox_Browse_PreviewMouseDown"
-                    Height="50"
-                    Width="545"   
+                    Width="Auto"   
                     FontStyle="Oblique"
-                    Margin="15,14,10,10"
-                    Background="#FBF6F5"
+                    Background="#FBF6F5" TextChanged="TextBox_Browse_TextChanged"
                 >
                     <TextBox.TextDecorations>
                         <TextDecorationCollection>
@@ -210,20 +207,30 @@
                         </TextDecorationCollection>
                     </TextBox.TextDecorations>
                 </TextBox>
-            </StackPanel>
 
+            </StackPanel>
+            
+            <Path 
+                x:Name="next_list_delimiter"
+                Grid.Row="5"
+                Fill="Black" 
+                Data="M 3,3 l 9,9 l -9,9 Z"                      
+                Stretch="Uniform" 
+                HorizontalAlignment="Stretch"   
+                Visibility="Visible"
+                />
 
             <StackPanel 
                 x:Name="delimiterSPanel"  
-                Margin="20,24,20,0"                 
                 Orientation="Vertical" 
-                Grid.ColumnSpan="10" 
+                Grid.Column="1"
                 Grid.Row="4" 
                 Grid.RowSpan="5" 
-                Height="171" 
-                VerticalAlignment="Top"   
-                IsEnabled="False"
+                Grid.ColumnSpan="8" 
+                VerticalAlignment="Center"   
+                IsEnabled="False" 
                 >
+                
                 <Label  
                     Content="CSV list separator"
                     FontWeight="DemiBold"
@@ -243,7 +250,7 @@
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
                         GroupName="separatorList"
-                        Width="125"
+                        Width="120"
                     />
 
                     <RadioButton 
@@ -253,7 +260,7 @@
                         VerticalContentAlignment="Center"
                         GroupName="separatorList"
                         HorizontalAlignment="Right" 
-                        Width="125"     
+                        Width="120"     
                     />
 
                     <RadioButton 
@@ -262,7 +269,7 @@
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
                     GroupName="separatorList"
-                    Width="125"     
+                    Width="120"     
                     />
 
                     <RadioButton 
@@ -271,7 +278,7 @@
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
                     GroupName="separatorList"
-                    Width="125"     
+                    Width="120"     
                     />
                     <TextBlock 
                     Text="Other separator"
@@ -304,7 +311,7 @@
                 HorizontalAlignment="Center" VerticalAlignment="Center" 
                 Width="100" 
                 FontSize="12"
-                Click="importCSVFile_Click" Height="40" Margin="324,37,320,37"
+                Click="importCSVFile_Click" Height="40" 
                 IsEnabled="False"
                >
                     <Button.Resources>

@@ -280,7 +280,7 @@
                 />
                 <ComboBox
                     x:Name="headersComboList"
-                    SelectionChanged="headersComboList_SelectionChanged"
+                    SelectionChanged="headersComboList_SelectionChanged_1"
                     SelectedIndex="0"    
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
@@ -429,55 +429,60 @@
                         >
                 <Separator Margin="0 0 0 0"/>
                 <Label
-                            Content="In the loaded CSV file"
-                            FontWeight="Bold"
-                            HorizontalContentAlignment="Left" 
-                            />
-                <StackPanel Orientation="Vertical" Margin="5">
-                    <WrapPanel Orientation="Horizontal">
+                    Content="In the loaded CSV file"
+                    FontWeight="Bold"
+                    HorizontalContentAlignment="Left" 
+                    />
+                <StackPanel
+                    Orientation="Vertical" 
+                    Margin="5"
+                    >
+                    <WrapPanel 
+                        Orientation="Horizontal"
+                        >
                         <Label 
-                                    Content="Title of the Date Column:" 
-                                    Foreground="Red" 
-                                    VerticalContentAlignment="Center"
-                                    />
+                            Content="Title of the Date Column:" 
+                            Foreground="Red" 
+                            VerticalContentAlignment="Center"
+                            />
                         <Image 
-                                    x:Name="questionMarkDate"
-                                    Source="/TSR;component/Resources/Images/Icons/icons8-question-mark-96.png" 
-                                    Width="15" 
-                                    Margin="0,0,0,0" 
-                                    MouseEnter="questionMarkDate_MouseEnter"
-                                    MouseLeave="questionMarkDate_MouseLeave"
-                                    />
+                            x:Name="questionMarkDate"
+                            Source="/TSR;component/Resources/Images/Icons/icons8-question-mark-96.png" 
+                            Width="15" 
+                            Margin="0,0,0,0" 
+                            MouseEnter="questionMarkDate_MouseEnter"
+                            MouseLeave="questionMarkDate_MouseLeave"
+                            />
                         <TextBox 
-                                x:Name="dateColTitle"
-                                Margin="0 0 0 0"
-                                VerticalContentAlignment="Center"
-                                Padding="10 0 0 0"
-                                Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                Width="460" 
+                            x:Name="dateColTitle"
+                            Margin="0 0 0 0"
+                            VerticalContentAlignment="Center"
+                            Padding="10 0 0 0"
+                            Template="{StaticResource TextBoxBaseControlTemplate}" 
+                            Width="460"                             
                                 />
                     </WrapPanel>
                     <WrapPanel>
                         <Label 
-                                    Content="Title of the Time Column" 
-                                    Foreground="Red"
-                                    />
+                            Content="Title of the Time Column" 
+                            Foreground="Red"
+                            />
                         <Image 
-                                    x:Name="questionMarkTime"
-                                    Source="/TSR;component/Resources/Images/Icons/icons8-question-mark-96.png" 
-                                    Width="15" 
-                                    Margin="1,0,0,0" 
-                                    MouseEnter="questionMarkTime_MouseEnter"
-                                    MouseLeave="questionMarkTime_MouseLeave"
-                                    />
+                            x:Name="questionMarkTime"
+                            Source="/TSR;component/Resources/Images/Icons/icons8-question-mark-96.png" 
+                            Width="15" 
+                            Margin="1,0,0,0" 
+                            MouseEnter="questionMarkTime_MouseEnter"
+                            MouseLeave="questionMarkTime_MouseLeave"
+                            />
                         <TextBox 
-                                    x:Name="timeColTitle"
-                                    Margin="0 0 0 0"
-                                    VerticalContentAlignment="Center"
-                                    Padding="10 0 0 0"
-                                    Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                    Width="460" 
-                                   />
+                            x:Name="timeColTitle"
+                            Margin="0 0 0 0"
+                            VerticalContentAlignment="Center"
+                            Padding="10 0 0 0"
+                            Template="{StaticResource TextBoxBaseControlTemplate}" 
+                            Width="460" 
+                            />
                     </WrapPanel>
                 </StackPanel>
             </StackPanel>
