@@ -36,7 +36,7 @@ git branch -a
 echo "\n\n Which branch would you like to pull? "
 read thisBranch
 
-git branch $thisBranch
+git checkout -b $thisBranch
 git branch --set-upstream-to=origin/$thisBranch $thisBranch
 git pull
 printf "\n \n"
