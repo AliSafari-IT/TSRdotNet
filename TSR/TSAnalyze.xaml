@@ -5,7 +5,223 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TSR"
         mc:Ignorable="d"
-        Title="TSAnalyze" Height="450" Width="800">
+        Title="TSAnalyze" Height="450" Width="800"        
+        >
+    <Window.Resources>
+        <!--Control colors.-->
+        <Color x:Key="WindowColor">#FFE8EDF9</Color>
+        <Color x:Key="ContentAreaColorLight">#FFC5CBF9</Color>
+        <Color x:Key="ContentAreaColorDark">#FF7381F9</Color>
+
+        <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
+        <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
+        <Color x:Key="DisabledForegroundColor">#FF888888</Color>
+
+        <Color x:Key="SelectedBackgroundColor">#FFC5CBF9</Color>
+        <Color x:Key="SelectedUnfocusedColor">#FFDDDDDD</Color>
+
+        <Color x:Key="ControlLightColor">White</Color>
+        <Color x:Key="ControlMediumColor">#FF7381F9</Color>
+        <Color x:Key="ControlDarkColor">#FF211AA9</Color>
+
+        <Color x:Key="ControlMouseOverColor">#FF3843C4</Color>
+        <Color x:Key="ControlPressedColor">#FF211AA9</Color>
+
+
+        <Color x:Key="GlyphColor">#FF444444</Color>
+        <Color x:Key="GlyphMouseOver">sc#1, 0.004391443, 0.002428215, 0.242281124</Color>
+        <!--Border colors-->
+        <Color x:Key="BorderLightColor">#FFCCCCCC</Color>
+        <Color x:Key="BorderMediumColor">#FF888888</Color>
+        <Color x:Key="BorderDarkColor">#FF444444</Color>
+
+        <Color x:Key="PressedBorderLightColor">#FF888888</Color>
+        <Color x:Key="PressedBorderDarkColor">#FF444444</Color>
+
+        <Color x:Key="DisabledBorderLightColor">#FFAAAAAA</Color>
+        <Color x:Key="DisabledBorderDarkColor">#FF888888</Color>
+
+        <Color x:Key="DefaultBorderBrushDarkColor">Black</Color>
+
+        <!--Control-specific resources.-->
+        <Color x:Key="HeaderTopColor">#FFC5CBF9</Color>
+        <Color x:Key="DatagridCurrentCellBorderColor">Black</Color>
+        <Color x:Key="SliderTrackDarkColor">#FFC5CBF9</Color>
+
+        <Color x:Key="NavButtonFrameColor">#FF3843C4</Color>
+
+        <LinearGradientBrush x:Key="MenuPopupBrush"
+                     EndPoint="0.5,1"
+                     StartPoint="0.5,0">
+            <GradientStop Color="{DynamicResource ControlLightColor}"
+                Offset="0" />
+            <GradientStop Color="{DynamicResource ControlMediumColor}"
+                Offset="0.5" />
+            <GradientStop Color="{DynamicResource ControlLightColor}"
+                Offset="1" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="ProgressBarIndicatorAnimatedFill"
+                     StartPoint="0,0"
+                     EndPoint="1,0">
+            <LinearGradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#000000FF"
+                    Offset="0" />
+                    <GradientStop Color="#600000FF"
+                    Offset="0.4" />
+                    <GradientStop Color="#600000FF"
+                    Offset="0.6" />
+                    <GradientStop Color="#000000FF"
+                    Offset="1" />
+                </GradientStopCollection>
+            </LinearGradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <Style x:Key="{x:Type Label}"
+            TargetType="Label">
+            <Setter Property="HorizontalContentAlignment"
+            Value="Left" />
+            <Setter Property="VerticalContentAlignment"
+              Value="Top" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Label">
+                        <Border>
+                            <ContentPresenter 
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    RecognizesAccessKey="True" 
+                                    />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger
+                                    Property="IsEnabled"
+                                    Value="false"
+                                    >
+                                <Setter Property="Foreground">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="{DynamicResource DisabledForegroundColor}" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+            <Border Background="{TemplateBinding Background}" 
+                    x:Name="Bd" BorderBrush="Black"
+                    BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="100"/>
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style x:Key="MyFocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Control}">
+                        <Grid Margin="3 2">
+                            <Rectangle Name="r1" StrokeThickness="1" Stroke="Black" StrokeDashArray="2 2"/>
+                            <Border Name="border" Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding ActualHeight}"  CornerRadius="2" BorderThickness="1" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ShadowStyle">
+            <Setter Property="Control.Foreground" Value="LightGray" />
+        </Style>
+        <Style x:Key="InformButton" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="11px"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FocusVisualStyle" Value="{StaticResource MyFocusVisual}" />
+            <Setter Property="Background" >
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                        <GradientStop Color="#FFFFD190" Offset="0.2"/>
+                        <GradientStop Color="Orange" Offset="0.85"/>
+                        <GradientStop Color="#FFFFD190" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" 
+        				BorderThickness="1"
+        				Padding="4,2" 
+        				BorderBrush="DarkGray" 
+        				CornerRadius="3" 
+        				Background="{TemplateBinding Background}">
+                            <Grid >
+                                <ContentPresenter HorizontalAlignment="Center" 
+        	                           VerticalAlignment="Center" Name="contentShadow" 
+        					Style="{StaticResource ShadowStyle}">
+                                    <ContentPresenter.RenderTransform>
+                                        <TranslateTransform X="1.0" Y="1.0" />
+                                    </ContentPresenter.RenderTransform>
+                                </ContentPresenter>
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                    VerticalAlignment="Center" Name="content"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF4788c8" />
+                                <Setter Property="Foreground" Value="#FF4788c8" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" >
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                                            <GradientStop Color="#FFFFD190" Offset="0.35"/>
+                                            <GradientStop Color="Orange" Offset="0.95"/>
+                                            <GradientStop Color="#FFFFD190" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="content" Property="RenderTransform" >
+                                    <Setter.Value>
+                                        <TranslateTransform Y="1.0" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsDefaulted" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF282828" />
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF282828" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Opacity" Value="0.7" />
+                                <Setter Property="Foreground" Value="Gray" />
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100*"/>
@@ -33,14 +249,14 @@
             <RowDefinition Height="100*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel
-        x:Name="stackPanel_ImportBtn"
-        Orientation="Vertical"
-        Grid.Column="2"
-        Grid.Row="3"
-        Grid.ColumnSpan="6"
-        Grid.RowSpan="3"
-        >
+        <StackPanel 
+            x:Name="stackPanel_ImportBtn"
+            Orientation="Vertical"
+            Grid.Column="2"
+            Grid.Row="1"
+            Grid.ColumnSpan="6"
+            Grid.RowSpan="3"            
+            >
             <Label
                 Content="Prepare Selected Time Series"
                 FontFamily="Sans Comic"
@@ -48,8 +264,11 @@
                 FontWeight="Black"
                 HorizontalContentAlignment="Center"
                 />
-            <StackPanel Orientation="Horizontal">
+            <StackPanel
+                Orientation="Horizontal"
+                >
                 <Path 
+                    x:Name="next_ts_selected"
                     Fill="Black" 
                     Data="M 3,3 l 9,9 l -9,9 Z" 
                     Margin="0 0 0 0" 
@@ -57,17 +276,16 @@
                     RenderTransformOrigin="0.753,-0.719" 
                     Width="30"  
                     Height="50"
-                    VerticalAlignment="Center"
-                    
+                    VerticalAlignment="Center"         
                 />
                 <ComboBox
-                x:Name="headersComboList"
-                SelectionChanged="headersComboList_SelectionChanged"
-                SelectedIndex="0"    
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontSize="13" Width="420"                
-                >
+                    x:Name="headersComboList"
+                    SelectionChanged="headersComboList_SelectionChanged"
+                    SelectedIndex="0"    
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontSize="12" Width="420"                
+                    >
                     <ComboBoxItem 
                         x:Name="comboItem"
                         HorizontalAlignment="Center"
@@ -77,25 +295,225 @@
                     </ComboBoxItem>
                 </ComboBox>
             </StackPanel>
-            <Border 
-                        Background="DarkSlateGray" 
-                        Width="75" 
-                        Margin="350 5 0 0"
-                        >
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Margin="30 5 25 0"
+                >
                 <Button 
-                            x:Name="previousButton"
-                            BorderBrush="DarkSlateGray"
-                            BorderThickness="1"
-                            Background="DarkSlateGray"
-                            Foreground="WhiteSmoke" 
-                            Content="Previous"
-                            FontWeight="DemiBold"
-                            Margin="11.131,0,0,0"
-                            HorizontalAlignment="Left"
-                            Click="previousButton_Click"
-                            >
+                    x:Name="previousButton"
+                    Content="Previous"
+                    FontWeight="DemiBold"
+                    Click="previousButton_Click"
+                    >
+                    <Button.Resources>
+                        <Style TargetType="{x:Type ToolTip}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ToolTip}">
+                                        <Grid Margin="0,60,0,0">
+                                            <Path Data="M0 0 30 0 50 -15 70 0 100 0 100 30 0 30z" Fill="#3E82C4" Stretch="Fill"/>
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Style>
+                        <StaticResource ResourceKey="InformButton"/>
+                    </Button.Style>
                 </Button>
-            </Border>
+                <Button 
+                    x:Name="confirmTS"
+                    Content="Confirm"
+                    FontWeight="DemiBold"
+                    Click="confirmTS_Click"
+                    >
+                    <Button.Resources>
+                        <Style TargetType="{x:Type ToolTip}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ToolTip}">
+                                        <Grid Margin="0,60,0,0">
+                                            <Path Data="M0 0 30 0 50 -15 70 0 100 0 100 30 0 30z" Fill="#3E82C4" Stretch="Fill"/>
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Style>
+                        <StaticResource ResourceKey="InformButton"/>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel 
+            x:Name="stackPanel_hiddenTitle"
+            Orientation="Vertical"
+            Grid.Column="1"
+            Grid.Row="1"
+            Grid.ColumnSpan="8"
+            Grid.RowSpan="3"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center" 
+            Margin="16,0,17,22" 
+            Width="600" Height="104"   
+            Visibility="Collapsed"
+            >
+            <Label 
+                Content="Creating Time Series for the Selected Variable" 
+                FontSize="18" 
+                Width="600"
+                Padding="20"
+                FontWeight="Bold" 
+                Background="Black" 
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center" 
+                Margin="0" Height="40"
+                
+                />
+        </StackPanel>
+        <StackPanel 
+            x:Name="MakeTSpanel"
+            Grid.Column="1"
+            Grid.ColumnSpan="8"
+            Grid.Row="4"
+            Grid.RowSpan="6" 
+            Margin="0,0,0,20"
+            IsEnabled="False"            
+            >
+            <WrapPanel>
+                <Path 
+                    x:Name="next_rd_dateTime"
+                    Fill="Black" 
+                    Data="M 3,3 l 9,9 l -9,9 Z" 
+                    Margin="0 0 0 0" 
+                    Stretch="Uniform" 
+                    RenderTransformOrigin="0.753,-0.719" 
+                    Width="30"  
+                    Height="50"
+                    VerticalAlignment="Center"     
+                    Visibility="Collapsed"
+                />
+                <StackPanel
+                    Orientation="Vertical">
+                    <RadioButton 
+                        x:Name="rBtn_onlyDate" 
+                        Content="My time series contain only Date column." 
+                        GroupName="dateTimeRadioList" 
+                        Margin="0,10,0,0" 
+                        IsChecked="True"
+                        Checked="rBtn_onlyDate_Checked"
+                        />
+                    <RadioButton 
+                        x:Name="rBtn_DateTime"
+                        Content="My time series contain Date and Time columns." 
+                        GroupName="dateTimeRadioList" 
+                        Margin="0,10" 
+                        Checked="rBtn_DateTime_Checked"
+                        />
+                </StackPanel>
+            </WrapPanel>
+           
+            <StackPanel
+                        x:Name="dateTime_StackPanel"
+                        Grid.Row="1" 
+                        Grid.RowSpan="5" 
+                        Grid.Column="7" 
+                        Grid.ColumnSpan="3" 
+                        Margin="0,5,0,0"     
+                        >
+                <Separator Margin="0 0 0 0"/>
+                <Label
+                            Content="In the loaded CSV file"
+                            FontWeight="Bold"
+                            HorizontalContentAlignment="Left" 
+                            />
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <WrapPanel Orientation="Horizontal">
+                        <Label 
+                                    Content="Title of the Date Column:" 
+                                    Foreground="Red" 
+                                    VerticalContentAlignment="Center"
+                                    />
+                        <Image 
+                                    x:Name="questionMarkDate"
+                                    Source="/TSR;component/Resources/Images/Icons/icons8-question-mark-96.png" 
+                                    Width="15" 
+                                    Margin="0,0,0,0" 
+                                    MouseEnter="questionMarkDate_MouseEnter"
+                                    MouseLeave="questionMarkDate_MouseLeave"
+                                    />
+                        <TextBox 
+                                x:Name="dateColTitle"
+                                Margin="0 0 0 0"
+                                VerticalContentAlignment="Center"
+                                Padding="10 0 0 0"
+                                Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                Width="460" 
+                                />
+                    </WrapPanel>
+                    <WrapPanel>
+                        <Label 
+                                    Content="Title of the Time Column" 
+                                    Foreground="Red"
+                                    />
+                        <Image 
+                                    x:Name="questionMarkTime"
+                                    Source="/TSR;component/Resources/Images/Icons/icons8-question-mark-96.png" 
+                                    Width="15" 
+                                    Margin="1,0,0,0" 
+                                    MouseEnter="questionMarkTime_MouseEnter"
+                                    MouseLeave="questionMarkTime_MouseLeave"
+                                    />
+                        <TextBox 
+                                    x:Name="timeColTitle"
+                                    Margin="0 0 0 0"
+                                    VerticalContentAlignment="Center"
+                                    Padding="10 0 0 0"
+                                    Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                    Width="460" 
+                                   />
+                    </WrapPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel 
+                x:Name="Create_CSV_btn_Panel"
+                >
+                <Button 
+                    x:Name="Make_TS" 
+                    Content="Make Time Series" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" 
+                    FontSize="12"
+                    Click="Make_TS_Click" 
+                    Height="40" 
+                    >
+                    <Button.Resources>
+                        <Style TargetType="{x:Type ToolTip}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ToolTip}">
+                                        <Grid Margin="0,60,0,0">
+                                            <Path Data="M0 0 30 0 50 -15 70 0 100 0 100 30 0 30z" Fill="#3E82C4" Stretch="Fill"/>
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Style>
+                        <StaticResource ResourceKey="InformButton"/>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
         </StackPanel>
     </Grid>
+
 </Window>

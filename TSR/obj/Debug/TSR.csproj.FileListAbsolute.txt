@@ -47,3 +47,4 @@ C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\obj\Debug\TSR.
 C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\obj\Debug\TSR.csproj.GenerateResource.cache
 C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\obj\Debug\TSR.csproj.CoreCompileInputs.cache
 C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\obj\Debug\TSR.csproj.CopyComplete
+C:\Projects\TSRdotNet\TSR\obj\Debug\TSAnalyze.baml

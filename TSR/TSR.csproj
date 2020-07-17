@@ -117,5 +117,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\icons8-question-mark-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Data\Input\" />
+    <Folder Include="Resources\Data\Output\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -17,27 +17,28 @@ namespace TSR
         private string fileName;
         private MainWindow mainWindow;
         private string[] headers;
-        private string selectedTimeSeries;
         private char delimiter;
+        public bool tsHasTime;
+        public string selectedTimeSeries { get; set; }
 
-        public TSAnalyze (MainWindow mainWindow)
+               public TSAnalyze (MainWindow mainWindow)
             {
             this.mainWindow = mainWindow;
             fileName = mainWindow.fileName;
             InitializeComponent ();
             Console.WriteLine ("File name is: " + fileName);
-
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             delimiter = mainWindow.delimiter;
-
+            tsHasTime = false;
             loadComboBoxItems ();
-
+            selectedTimeSeries = (string) headersComboList.SelectedItem;
+            Console.WriteLine ("\n1. Selected time seris is " + selectedTimeSeries + "\n");
             }
-
 
         private void headersComboList_SelectionChanged (object sender, System.Windows.Controls.SelectionChangedEventArgs e)
             {
             selectedTimeSeries = e.AddedItems[0].ToString ();
-            Console.WriteLine ("\nSelected time seris is " + selectedTimeSeries + "\n");
+            Console.WriteLine ("\n2. Selected time seris is " + selectedTimeSeries + "\n");
             }
 
         private void loadComboBoxItems ()
@@ -83,6 +84,54 @@ namespace TSR
             {
             this.Close ();
             mainWindow.Show ();
+            }
+
+        private void Make_TS_Click (object sender, RoutedEventArgs e)
+            {
+
+            }
+
+        private void confirmTS_Click (object sender, RoutedEventArgs e)
+            {
+            MakeTSpanel.IsEnabled = true;
+            stackPanel_ImportBtn.Visibility = Visibility.Collapsed;
+            stackPanel_hiddenTitle.Visibility = Visibility.Visible;
+            next_rd_dateTime.Visibility = Visibility.Visible;
+            }
+
+        private void rBtn_onlyDate_Checked (object sender, RoutedEventArgs e)
+            {
+            tsHasTime = false;
+            }
+
+        private void rBtn_DateTime_Click (object sender, RoutedEventArgs e)
+            {
+            tsHasTime = true;
+            }
+
+        private void rBtn_DateTime_Checked (object sender, RoutedEventArgs e)
+            {
+
+            }
+
+        private void questionMarkDate_MouseEnter (object sender, System.Windows.Input.MouseEventArgs e)
+            {
+
+            }
+
+        private void questionMarkDate_MouseLeave (object sender, System.Windows.Input.MouseEventArgs e)
+            {
+
+            }
+
+        private void questionMarkTime_MouseEnter (object sender, System.Windows.Input.MouseEventArgs e)
+            {
+
+            }
+
+        private void questionMarkTime_MouseLeave (object sender, System.Windows.Input.MouseEventArgs e)
+            {
+
             }
         }
 
