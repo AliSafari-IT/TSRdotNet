@@ -259,9 +259,9 @@
             >
             <Label
                 Content="Prepare Selected Time Series"
-                FontFamily="Sans Comic"
-                FontSize="26"
-                FontWeight="Black"
+                FontFamily="Comic Sans MS" 
+                FontSize="21"
+                FontWeight="Bold"
                 HorizontalContentAlignment="Center"
                 />
             <StackPanel
@@ -370,6 +370,7 @@
                 Width="600"
                 Padding="20"
                 FontWeight="Bold" 
+                FontFamily="Comic Sans MS"
                 Background="Black" 
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center" 
