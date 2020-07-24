@@ -8,6 +8,9 @@ using System;
 using System.Windows;
 using System.Globalization;
 using System.Windows.Controls;
+using System.Diagnostics;
+using Microsoft.Win32;
+using System.Text;
 
 namespace TSR
     {
@@ -26,10 +29,7 @@ namespace TSR
         public int var_ts_idx;
         public int dateIndx;
         public int timeIndx;
-
         private List<string[]> tsData;
-
-
 
         public TSAnalyze (MainWindow mainWindow)
             {
@@ -53,9 +53,9 @@ namespace TSR
 
         private void loadComboBoxItems ()
             {
-            string[] headers=getCSV_Header (fileName, delimiter);
+            headers = getCSV_Header (fileName, delimiter);
 
-            Console.WriteLine ("Number of columns: {0}.", headers.Length);
+            Console.WriteLine ("Number of columns: headers.Length= {0}.", headers.Length);
             //MessageBox.Show ("number of columns " + headers.Length, "Verifying the choice of list separator ", (MessageBoxButton) MessageBoxButtons.OKCancel);
 
             //Fill in the Combo Box for choosing the time series to extract from the source file
@@ -104,6 +104,7 @@ namespace TSR
             dateIndx = GetDateIndx ();      //Get the index of date column in the source csv file
             if (tsHasTime) timeIndx = GetTimeIndx ();       //Get the index of time column in the source csv file
             tsData = GetTS (); // Get the selected time series
+
             }
 
 
@@ -172,7 +173,7 @@ namespace TSR
             setDateColumnTitle ();
             string stringToCheck = "time";
             int stringToCheckIndex = -1;
-            string elementInArray = "Not Defined or Not Found";
+            string elementInArray = "Not Defined or Not Found!";
             timeColTitle.Text = elementInArray;
             if (Array.Exists<string> (headers, (Predicate<string>) delegate (string s)
                 {
@@ -190,8 +191,6 @@ namespace TSR
 
             dateColTitle.Text = "Not Defined or Not Found";
             timeColTitle.Text = "The chosen time seies have only date but no time to display.";
-
-
             var match = headers.FirstOrDefault(c => c.IndexOf("date", StringComparison.OrdinalIgnoreCase) > -1);
 
             if (match != null)
@@ -243,6 +242,8 @@ namespace TSR
 
     internal class CSVReader
         {
+        private string[] headers;
+
         // returns an array of strings representing the different fields of the csv file
         public string[] getHeaders (string filename, char delimiter)
             {
@@ -257,7 +258,7 @@ namespace TSR
                 }
             string header = filereader.ReadLine();
             header = header.Replace ('"', ' ');
-            string[] headers = header.Split(delimiter).Select(s => s.Trim()).Where(s => s != String.Empty).ToArray();
+            headers = header.Split (delimiter).Select (s => s.Trim ()).Where (s => s != String.Empty).ToArray ();
             return headers;
             }
 
@@ -279,53 +280,53 @@ namespace TSR
             while ((line = reader.ReadLine ()) != null)
                 {
                 line = line.Replace ('"', ' ');
-
                 string[] values = line.Split(delimiter).Select(s => s.Trim()).Where(s => s != String.Empty).ToArray();
 
                 Console.WriteLine ("CSV LN {0}: [{1}]", k++, string.Join (", ", values));
+                try
+                    {
+                    if (values.Length == 0)
+                        {
+                        throw new System.FormatException ();
+                        }
+                    try
+                        {
+                        if (!Double.TryParse (values[xIndex], NumberStyles.Any, CultureInfo.CurrentCulture, out variableValue))
+                            {
+                            throw new IndexOutOfRangeException ();
+                            }
+                        }
+                    catch (IndexOutOfRangeException)
+                        {
+                        Console.WriteLine ("Missing data (null at line {0}).", k + 1);
+                        MessageBox.Show ("There is a problem with parsing data. Check this line " + (k + 1) + " and fix the problem; then try again.");
+
+                        OpenFileToCorrect (filename);
+                        continue;
+                        }
+                    }
+                catch (System.FormatException)
+                    {
+                    continue;
+                    }
 
                 if (hastime)
                     {
-                    try
-                        {
-                        if (values.Length == 0)
-                            {
-                            throw new System.FormatException ();
-                            }
-                        if (Double.TryParse (values[xIndex], NumberStyles.Any, CultureInfo.CurrentCulture, out variableValue))
-                            {
-
-                            }
-                        }
-                    catch (System.FormatException)
-                        {
-                        continue;
-                        }
-                    string[] linedata = new string[] { values[dateIndex], values[timeIndex], variableValue.ToString() };
+                    string[] linedata = new string[] { values[dateIndex], values[timeIndex], variableValue.ToString()};
                     data.Add (linedata);
                     }
                 else
                     {
-                    try
-                        {
-                        if (values.Length == 0)
-                            {
-                            throw new System.FormatException ();
-                            }
-                        if (Double.TryParse (values[xIndex], NumberStyles.Any, CultureInfo.CurrentCulture, out variableValue))
-                            {
-
-                            }
-                        }
-                    catch (System.FormatException)
-                        {
-                        continue;
-                        }
                     string[] linedata = new string[] { values[dateIndex], values[xIndex] };
                     data.Add (linedata);
                     }
                 }
             return data;
+            }
+
+        private void OpenFileToCorrect (string filename)
+            {
+            Process.Start (@"notepad.exe", filename);
             }
         }
     }

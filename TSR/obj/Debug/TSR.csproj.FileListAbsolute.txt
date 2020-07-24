@@ -48,3 +48,11 @@ C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\obj\Debug\TSR.
 C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\obj\Debug\TSR.csproj.CoreCompileInputs.cache
 C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\obj\Debug\TSR.csproj.CopyComplete
 C:\Projects\TSRdotNet\TSR\obj\Debug\TSAnalyze.baml
+C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\bin\Debug\CsvHelper.dll
+C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\bin\Debug\CsvHelper.xml
+C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\bin\Debug\System.Threading.Tasks.Extensions.xml
