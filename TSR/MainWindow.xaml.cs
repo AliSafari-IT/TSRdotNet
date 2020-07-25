@@ -103,7 +103,6 @@ namespace TSR
             {
             Console.WriteLine ("\n\n********** Preparing the time series needed for the next step *************\n");
 
-
             }
 
         private void TextBox_Browse_TextChanged (object sender, TextChangedEventArgs e)

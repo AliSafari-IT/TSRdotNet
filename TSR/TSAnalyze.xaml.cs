@@ -19,10 +19,10 @@ namespace TSR
     /// </summary>
     public partial class TSAnalyze : Window
         {
-        private string fileName;
-        private MainWindow mainWindow;
+        private readonly string fileName;
+        private readonly MainWindow mainWindow;
         private string[] headers;
-        private char delimiter;
+        private readonly char delimiter;
         public bool tsHasTime;
 
         public string selectedTimeSeries;
@@ -74,8 +74,9 @@ namespace TSR
                 {
                 fileReader = new StreamReader (@filename);
                 }
-            catch (FileNotFoundException)
+            catch (IOException)
                 {
+                MessageBox.Show ("The process cannot access the file '" + filename + "' because it is being used by another process.'", "Error#IOException");
                 return null;
                 }
             string header = fileReader.ReadLine();
@@ -104,9 +105,25 @@ namespace TSR
             dateIndx = GetDateIndx ();      //Get the index of date column in the source csv file
             if (tsHasTime) timeIndx = GetTimeIndx ();       //Get the index of time column in the source csv file
             tsData = GetTS (); // Get the selected time series
-
+            SaveToFile (tsData);
             }
 
+        private void SaveToFile (List<string[]> tsData)
+            {
+            string renamedFile = Path.GetFileNameWithoutExtension (fileName);
+            renamedFile += "_" + selectedTimeSeries + ".CSV";
+
+            using (TextWriter tw = new StreamWriter (renamedFile))
+                {
+                foreach (var item in tsData)
+                    {
+                    foreach (var element in item)
+                        tw.Write (string.Format ("{0}\t", element.ToString ()));
+                    tw.WriteLine ("");
+                    }
+                tw.Close ();
+                }
+            }
 
         private int GetDateIndx ()
             {
@@ -132,7 +149,6 @@ namespace TSR
             return timeIndx;
             }
 
-
         private int GetVarTSindx ()
             {
             for (int j = 0; j < headers.Length; j++)
@@ -146,16 +162,13 @@ namespace TSR
             return var_ts_idx;
             }
 
-
-
         private List<string[]> GetTS ()
             {
             List<string[]> data = new List<String[]>();
             CSVReader csvReader = new CSVReader();
-            data = csvReader.getData (GetVarTSindx (), GetDateIndx (), this.fileName, this.delimiter, tsHasTime, GetTimeIndx ());
+            data = csvReader.getData (GetVarTSindx (), GetDateIndx (), fileName, delimiter, tsHasTime, GetTimeIndx ());
             return data;
             }
-
 
         private void confirmTS_Click (object sender, RoutedEventArgs e)
             {

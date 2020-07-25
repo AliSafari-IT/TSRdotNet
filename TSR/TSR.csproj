@@ -87,6 +87,7 @@
     <Compile Include="TSAnalyze.xaml.cs">
       <DependentUpon>TSAnalyze.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TSrecord.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

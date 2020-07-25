@@ -218,7 +218,7 @@
                 Data="M 3,3 l 9,9 l -9,9 Z"                      
                 Stretch="Uniform" 
                 HorizontalAlignment="Stretch"   
-                Visibility="Visible"
+                Visibility="Hidden"
                 />
 
             <StackPanel 
