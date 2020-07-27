@@ -280,7 +280,8 @@
                 />
                 <ComboBox
                     x:Name="headersComboList"
-                    SelectionChanged="headersComboList_SelectionChanged_1"
+                    SelectionChanged="headersComboList_SelectionChanged"
+                    
                     SelectedIndex="0"    
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
@@ -409,6 +410,7 @@
                         Margin="0,10,0,0" 
                         IsChecked="True"
                         Checked="rBtn_onlyDate_Checked"
+                        Click="rBtn_onlyDate_Click"
                         />
                     <RadioButton 
                         x:Name="rBtn_DateTime"

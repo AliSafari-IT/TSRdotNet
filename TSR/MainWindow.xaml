@@ -148,24 +148,22 @@
                 />
             <Path 
                 x:Name="next_open_csv"
-                Grid.Row="3"
+                Grid.Row="3" Grid.Column="1"
                 Fill="Black" 
                 Data="M 3,3 l 9,9 l -9,9 Z"                      
                 Stretch="Uniform" 
                 HorizontalAlignment="Stretch"
                 />
             <StackPanel 
+                x:Name="browsePanel"
                 Orientation="Horizontal"
-                Grid.Column="1"
+                Grid.Column="2"
                 Grid.Row="3"
-                Grid.ColumnSpan="8"
+                Grid.ColumnSpan="3"
                >
 
                 <TextBox 
                     x:Name="TextBox_Browse" 
-                    Grid.Row="3"
-                    Grid.Column="2"
-                    Grid.ColumnSpan="6"
                     VerticalContentAlignment="Center" 
                     HorizontalContentAlignment="Center"
                     BorderThickness="0" 
@@ -177,7 +175,7 @@
                     FontStretch="UltraExpanded"
                     Cursor="Hand" 
                     PreviewMouseDown="TextBox_Browse_PreviewMouseDown"
-                    Width="Auto"   
+                    Width="235"   
                     FontStyle="Oblique"
                     Background="#FBF6F5" TextChanged="TextBox_Browse_TextChanged"
                 >
@@ -209,8 +207,9 @@
                     </TextBox.TextDecorations>
                 </TextBox>
 
+
             </StackPanel>
-            
+
             <Path 
                 x:Name="next_list_delimiter"
                 Grid.Row="5"
@@ -231,7 +230,7 @@
                 VerticalAlignment="Center"   
                 IsEnabled="False" 
                 >
-                
+
                 <Label  
                     Content="CSV list separator"
                     FontWeight="DemiBold"
@@ -337,6 +336,87 @@
 
                 </Button>
             </StackPanel>
+            <Path 
+                x:Name="next_open_selectedTS"
+                Grid.Row="3"
+                Fill="Black" 
+                Data="M 3,3 l 9,9 l -9,9 Z"                      
+                Stretch="Uniform" 
+                HorizontalAlignment="Stretch" RenderTransformOrigin="4.411,0.488" Grid.ColumnSpan="2" Grid.Column="4" Margin="77,0,0,0"
+                />
+            <TextBox 
+                    x:Name="TextBox_Browse_SelectedTS"
+                    VerticalContentAlignment="Center" 
+                    HorizontalContentAlignment="Center"
+                    BorderThickness="0" 
+                    Text="Browse for a Selected Time Series" 
+                    TextWrapping="Wrap" 
+                    ToolTip="Click to select the CSV file" 
+                    ToolTipService.Placement="Center" 
+                    FontSize="12" 
+                    FontStretch="UltraExpanded"
+                    Cursor="Hand" 
+                    PreviewMouseDown="TextBox_Browse_SelectedTS_PreviewMouseDown"
+                    Width="Auto"   
+                    FontStyle="Oblique"
+                    Background="#FBF6F5" TextChanged="TextBox_Browse_TextChanged" Grid.ColumnSpan="3" Grid.Column="6" Margin="0,40,0,0" Grid.Row="2" Grid.RowSpan="2" HorizontalAlignment="Left"
+                >
+                <TextBox.TextDecorations>
+                    <TextDecorationCollection>
+                        <TextDecoration  
+                                PenThicknessUnit="FontRecommended">
+                            <TextDecoration.Pen>
+                                <Pen Thickness="3">
+                                    <Pen.Brush>
+                                        <LinearGradientBrush 
+                                                Opacity="0.5"
+                                                StartPoint="0,0.5"
+                                                EndPoint="1,0.5"
+                                            >
+                                            <GradientStop Color="DimGray" Offset="0" />
+                                            <GradientStop Color="LightGray" Offset="1" />
+                                        </LinearGradientBrush>
+                                    </Pen.Brush>
+                                    <Pen.DashStyle>
+                                        <DashStyle Dashes="2.5"/>
+                                    </Pen.DashStyle>
+                                </Pen>
+                            </TextDecoration.Pen>
+                        </TextDecoration>
+                    </TextDecorationCollection>
+                </TextBox.TextDecorations>
+            </TextBox>
+            <Button 
+                x:Name="importSelectedTS" 
+                Content="Import" 
+                HorizontalAlignment="Center" VerticalAlignment="Center" 
+                Width="100" 
+                FontSize="12"
+                Click="importSelectedTS_Click" Height="40" 
+                IsEnabled="False"
+                Visibility="Collapsed"
+               >
+                <Button.Resources>
+                    <Style TargetType="{x:Type ToolTip}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ToolTip}">
+                                    <Grid Margin="0,60,0,0">
+                                        <Path Data="M0 0 30 0 50 -15 70 0 100 0 100 30 0 30z" Fill="#3E82C4" Stretch="Fill"/>
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                </Button.Resources>
+
+                <Button.Style>
+                    <StaticResource ResourceKey="InformButton"/>
+                </Button.Style>
+
+            </Button>
         </Grid>
 
     </Border>

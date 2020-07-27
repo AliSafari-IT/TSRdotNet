@@ -41,13 +41,19 @@ namespace TSR
 
             if (openFileDialog.ShowDialog () == true)
                 {
-                TextBox_Browse.Text = openFileDialog.FileName;
+                TextBox_Browse.ToolTip = "Click again to select another file!";
                 TextBox_Browse.FontSize = 11;
-                TextBox_Browse.ToolTip = "Click again to select another file";
+                TextBox_Browse.Text = openFileDialog.FileName;
+                Console.WriteLine ("\nMainWindow.1. Browsed file name (TextBox_Browse.Text): " + TextBox_Browse.Text);
+
+                TextBox_Browse_SelectedTS.Visibility = Visibility.Collapsed;
+                next_open_selectedTS.Visibility = Visibility.Collapsed;
+                browsePanel.SetValue (Grid.ColumnSpanProperty, 8);
+                TextBox_Browse.SetValue (Grid.ColumnSpanProperty, 8);
 
                 importCSVFile.IsEnabled = true;
                 delimiterSPanel.IsEnabled = true;
-                
+
                 next_open_csv.Visibility = Visibility.Hidden;
 
                 next_list_delimiter.Visibility = Visibility.Visible;
@@ -56,12 +62,12 @@ namespace TSR
 
         private void importCSVFile_Click (object sender, RoutedEventArgs e)
             {
-            Console.WriteLine ("\n\n********** Getting the header fields of the loaded time series. *************\n");
             delimiter = GetDelimiter ();
+            Console.WriteLine ("\nMainWindow.2. GetDelimiter: \t" + delimiter);
+
             fileName = TextBox_Browse.Text;
 
             TSAnalyze tsa = new TSAnalyze(this);
-
             tsa.ShowDialog ();
             }
 
@@ -101,13 +107,48 @@ namespace TSR
 
         private void PrepareNeededTS_Click (object sender, RoutedEventArgs e)
             {
-            Console.WriteLine ("\n\n********** Preparing the time series needed for the next step *************\n");
+            //Console.WriteLine ("\n\n********** Preparing the time series needed for the next step *************\n");
 
             }
 
         private void TextBox_Browse_TextChanged (object sender, TextChangedEventArgs e)
             {
-            
+            }
+
+        private void TextBox_Browse_SelectedTS_PreviewMouseDown (object sender, MouseButtonEventArgs e)
+            {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "STS files (*.sts)|*.STS|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = System.IO.Path.GetDirectoryName (System.Diagnostics.Process.GetCurrentProcess ().MainModule.FileName);
+            importSelectedTS.Visibility = Visibility.Visible;
+            if (openFileDialog.ShowDialog () == true)
+                {
+                TextBox_Browse_SelectedTS.Text = openFileDialog.FileName;
+                TextBox_Browse_SelectedTS.FontSize = 11;
+                TextBox_Browse_SelectedTS.ToolTip = "Click again to select another Time Series";
+                browsePanel.Visibility = Visibility.Collapsed;
+                delimiterSPanel.Visibility = Visibility.Collapsed;
+                TextBox_Browse_SelectedTS.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                next_open_selectedTS.Visibility = Visibility.Collapsed;
+                TextBox_Browse_SelectedTS.SetValue (Grid.ColumnProperty, 1);
+                TextBox_Browse_SelectedTS.SetValue (Grid.ColumnSpanProperty, 8);
+                importSelectedTS.SetValue (Grid.ColumnProperty, 1);
+                importSelectedTS.SetValue (Grid.RowProperty, 5);
+                importSelectedTS.IsEnabled = true;
+
+                next_open_csv.Visibility = Visibility.Hidden;
+                next_list_delimiter.Visibility = Visibility.Visible;
+                }
+
+            }
+
+        private void importSelectedTS_Click (object sender, RoutedEventArgs e)
+            {
+            delimiter = '\t';
+            fileName = TextBox_Browse_SelectedTS.Text;
+            Console.WriteLine ("\nMainWindow.importSelectedTS_Click. delimiter is {0} and the filename is: {1}." , delimiter, fileName);
+            TSreview tsr= new TSreview(this);
+            tsr.ShowDialog ();
             }
         }
     }

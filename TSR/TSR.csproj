@@ -84,10 +84,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ARiMAProcess.cs" />
     <Compile Include="TSAnalyze.xaml.cs">
       <DependentUpon>TSAnalyze.xaml</DependentUpon>
     </Compile>
     <Compile Include="TSrecord.cs" />
+    <Compile Include="TSreview.xaml.cs">
+      <DependentUpon>TSreview.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -101,6 +105,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="TSAnalyze.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TSreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -56,3 +56,5 @@ C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\bin\Debug\CsvH
 C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
 C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\obj\Debug\TSreview.g.cs
+C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\obj\Debug\TSreview.baml
