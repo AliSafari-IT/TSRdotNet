@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace TSR
@@ -150,5 +151,7 @@ namespace TSR
             TSreview tsr= new TSreview(this);
             tsr.ShowDialog ();
             }
+
+
         }
     }

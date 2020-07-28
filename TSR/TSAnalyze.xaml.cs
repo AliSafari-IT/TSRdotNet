@@ -147,7 +147,7 @@ namespace TSR
             @selectedTSFile += "_" + selectedTimeSeries + ".sts";
             Console.WriteLine ("\nTSAnalyze.9.2. SaveToFile => file name of the @selectedTSFile ==> " + @selectedTSFile);
 
-            @selectedTSFilePath = directoryOfSelectedFile+Path.DirectorySeparatorChar +@selectedTSFile;
+            @selectedTSFilePath = directoryOfSelectedFile + Path.DirectorySeparatorChar + @selectedTSFile;
             Console.WriteLine ("\nTSAnalyze.9.3. SaveToFile => Full path of @selectedTSFile ==> \n@selectedTSFilePath: " + @selectedTSFilePath);
 
             try
@@ -332,7 +332,7 @@ namespace TSR
             }
 
         // returns the data in a list of string arrays in the form of [date, time, xvalue, yvalue] if the dataset contains both a date and a time
-        public List<string[]> getData (int xIndex, int dateIndex, string filename, char delimiter, bool hastime, int timeIndex)
+        public List<string[]> getData (int xIndex, int dateIndex, string @filename, char delimiter, bool hastime, int timeIndex)
             {
             StreamReader reader = null;
             try
@@ -345,57 +345,54 @@ namespace TSR
                 }
             string line = reader.ReadLine();
             List<String[]> data = new List<String[]>();
-            double variableValue; int k = 0;
+            double variableValue=0; int k = 1;
             while ((line = reader.ReadLine ()) != null)
                 {
                 line = line.Replace ('"', ' ');
                 string[] values = line.Split(delimiter).Select(s => s.Trim()).Where(s => s != String.Empty).ToArray();
-
-                // Console.WriteLine ("CSV LN {0}: [{1}]", k++, string.Join (", ", values));
+                k++;
+                Console.WriteLine ("CSV LN {0}: [{1}]", k, string.Join (", ", values));
                 try
                     {
-                    if (values.Length == 0)
+                    if (Double.TryParse (values[xIndex], NumberStyles.Any, CultureInfo.CurrentUICulture, out variableValue))
                         {
-                        throw new System.FormatException ();
-                        }
-                    try
-                        {
-                        if (!Double.TryParse (values[xIndex], NumberStyles.Any, CultureInfo.CurrentCulture, out variableValue))
+                        if (hastime)
                             {
-                            throw new IndexOutOfRangeException ();
+                            string[] linedata = new string[] { values[dateIndex], values[timeIndex], variableValue.ToString()};
+                            data.Add (linedata);
+                            }
+                        else
+                            {
+                            string[] linedata = new string[] { values[dateIndex], values[xIndex] };
+                            data.Add (linedata);
                             }
                         }
-                    catch (IndexOutOfRangeException)
-                        {
-                        Console.WriteLine ("Missing data (null at line {0}).", k + 1);
-                        MessageBox.Show ("There is a problem with parsing data. Check this line " + (k + 1) + " and fix the problem; then try again.");
-
-                        OpenFileToCorrect (filename);
-                        continue;
-                        }
                     }
-                catch (System.FormatException)
+                catch (NullReferenceException ne)
                     {
-                    continue;
+                    MessageBox.Show ("An error just found in the input data: (" + ne.Message + "). Check line number: " + k, "Err# Null Reference Exception! ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Environment.Exit (-1);
                     }
-
-                if (hastime)
+                catch (IndexOutOfRangeException ior)
                     {
-                    string[] linedata = new string[] { values[dateIndex], values[timeIndex], variableValue.ToString()};
-                    data.Add (linedata);
-                    }
-                else
-                    {
-                    string[] linedata = new string[] { values[dateIndex], values[xIndex] };
-                    data.Add (linedata);
+                    MessageBox.Show ("An error just found in the input data: (" + ior.Message+"). Check line number: "+k, "Err# Index Out Of Range Exception! ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Environment.Exit (-1);
                     }
                 }
             return data;
             }
 
-        private void OpenFileToCorrect (string filename)
+        private void Shutdown ()
             {
-            Process.Start (@"notepad.exe", filename);
+            // Shutdown and return a non-default exit code
+            Application.Current.Shutdown (-1);
+            System.Windows.Application.Current.MainWindow.Close ();
+
+            }
+
+        private void OpenFileToCorrect (string @filename)
+            {
+            Process.Start (@"notepad.exe", @filename);
             }
         }
     }

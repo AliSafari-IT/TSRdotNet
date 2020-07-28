@@ -93,7 +93,7 @@ namespace TSR
             ts_dataValues = get_TS_data (tsAnalyze.selectedTSFile, ',');  //Load data list
 
             //  Calculate mean value
-            meanValue.Text = getAverage ().ToString ();
+            meanValue.Text = GetAverage ().ToString ();
 
             // median of elements
             medianValue.Text = GetMedian ().ToString ();
@@ -102,7 +102,7 @@ namespace TSR
             sdValue.Text = getStandardDeviation ().ToString ();
 
             // Get max and min
-            maxVal.Text = getMax ().ToString ();
+            maxVal.Text = GetMax ().ToString ();
             minVal.Text = getMin ().ToString ();
 
             // Count the list elements 
@@ -118,6 +118,7 @@ namespace TSR
 
         private int getLength ()
             {
+
             return ts_dataValues.Count;
             }
 
@@ -126,20 +127,33 @@ namespace TSR
             return ts_dataValues.Min ();
             }
 
-        private double getMax ()
+        private double GetMax ()
             {
             return ts_dataValues.Max ();
             }
 
-        private double getAverage ()
+        private double GetAverage ()
             {
-            return ts_dataValues.Average ();    //  Calculate mean value
-
+            double ave = 0;
+            try
+                {
+                ave = ts_dataValues.Average ();    //  Calculate mean value
+                }
+            catch (InvalidOperationException ex)
+                {
+                MessageBox.Show ("The sequence on which it is called is empty: (" + ex.Message +
+                    "). Check if your source input STS file is a comma-separated values (CSV), in which each line of the file is a " +
+                    "data record. Each STS record consists of two or three fields, separated by commas. If it is not a CSV, You can " +
+                    "convert the file to a CSV (comma-separated values) file by using a spreadsheet application such as Microsoft Excel" +
+                    " or LibreOffice Calc.", "Err# Null Reference Exception! ", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit (-1);
+                }
+            return ave;
             }
 
         private double getStandardDeviation ()
             {
-            double sumOfSquaresOfDifferences = ts_dataValues.Select(val => (val - getAverage()) * (val - getAverage())).Sum();
+            double sumOfSquaresOfDifferences = ts_dataValues.Select(val => (val - GetAverage()) * (val - GetAverage())).Sum();
             double sd = Math.Sqrt(sumOfSquaresOfDifferences / ts_dataValues.Count);
             return sd;
             }
@@ -159,7 +173,7 @@ namespace TSR
                 }
             else
                 {
-                return (ary[ary.Length / 2] + ary[(ary.Length / 2) + 1]) / 2;
+                return (ary[ary.Length / 2 - 1] + ary[ary.Length / 2]) / 2;
                 }
             }
 
@@ -192,7 +206,6 @@ namespace TSR
 
             string line = fileReader.ReadLine(); // skip header
             int lineNr=1;
-
             while ((line = fileReader.ReadLine ()) != null)
                 {
                 lineNr++;
@@ -200,45 +213,53 @@ namespace TSR
                 line = line.Replace ('"', ' ');
                 string[] values = line.Split(delimiter).Select(s => s.Trim()).Where(s => s != String.Empty).ToArray();
 
-
-                if (Double.TryParse (values[values.Count () - 1], NumberStyles.Any, CultureInfo.CurrentCulture, out double number))
+                try
                     {
-                    Console.WriteLine (string.Format ("Local culture results for the parsing of {0} is {1}", values[values.Count () - 1], number));
-                    ts.Add (number);
+                    if (double.TryParse (values[values.Count () - 1], NumberStyles.Any, CultureInfo.CurrentCulture, out double number))
+                        {
+                        Console.WriteLine (string.Format ("Local culture results for the parsing of {0} yielded: {1}", values[values.Count () - 1], number));
+                        ts.Add (number);
+                        }
                     }
-                else
+                catch (NullReferenceException ne)
                     {
                     Console.WriteLine ("Unable to parse '{0}'.", values[values.Count () - 1].ToString ());
-                    MessageBox.Show ("Unable to parse: " + values[values.Count () - 1].ToString () + " at line number " + lineNr);
+                    MessageBox.Show ("An error just found in the input data: (" + ne.Message + "). Check line number: " + lineNr, "Err# Null Reference Exception! ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Environment.Exit (-1);
+                    }
+                catch (IndexOutOfRangeException ior)
+                    {
+                    Console.WriteLine ("Unable to parse '{0}'.", values[values.Count () - 1].ToString ());
+                    MessageBox.Show ("An error just found in the input data: (" + ior.Message + "). Check line number: " + lineNr, "Err# Index Out Of Range Exception! ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Environment.Exit (-1);
                     }
                 }
-
             return ts;
             }
 
-            // returns an array of strings representing the different fields of the SELECTED time series file
+        // returns an array of strings representing the different fields of the SELECTED time series file
         private string[] GetHeader (string stsFile, char delimiter)
             {
-                StreamReader fileReader = null;
-                try
-                    {
-                    fileReader = new StreamReader (@stsFile);
-                    }
-                catch (IOException)
-                    {
-                    MessageBox.Show ("The process cannot access the file '" + @stsFile + "' because it is being used by another process.'", "Error#IOException");
-                    return null;
-                    }
-                string header = fileReader.ReadLine();
-                header = header.Replace ('"', ' ');
-                Console.WriteLine ("selectedTimeSeries delimiter is: " + delimiter);
-                headers = header.Split (delimiter).Select (s => s.Trim ()).Where (s => s != String.Empty).ToArray ();
+            StreamReader fileReader = null;
+            try
+                {
+                fileReader = new StreamReader (@stsFile);
+                }
+            catch (IOException)
+                {
+                MessageBox.Show ("The process cannot access the file '" + @stsFile + "' because it is being used by another process.'", "Error#IOException");
+                return null;
+                }
+            string header = fileReader.ReadLine();
+            header = header.Replace ('"', ' ');
+            Console.WriteLine ("selectedTimeSeries delimiter is: " + delimiter);
+            headers = header.Split (delimiter).Select (s => s.Trim ()).Where (s => s != String.Empty).ToArray ();
 
-                headers.ToList ().ForEach (i => Console.WriteLine (i.ToString ()));
-                Console.WriteLine ("[{0}]", string.Join (", ", headers));
+            headers.ToList ().ForEach (i => Console.WriteLine (i.ToString ()));
+            Console.WriteLine ("[{0}]", string.Join (", ", headers));
 
-                fileReader.Close ();
-                return headers;
+            fileReader.Close ();
+            return headers;
             }
 
         private void Combo_TS_FileList_SelectionChanged (object sender, SelectionChangedEventArgs e)
@@ -251,7 +272,7 @@ namespace TSR
 
 
             //  Calculate mean value
-            meanValue.Text = getAverage ().ToString ();
+            meanValue.Text = GetAverage ().ToString ();
 
             // median of elements
             medianValue.Text = GetMedian ().ToString ();
@@ -260,7 +281,7 @@ namespace TSR
             sdValue.Text = getStandardDeviation ().ToString ();
 
             // Get max and min
-            maxVal.Text = getMax ().ToString ();
+            maxVal.Text = GetMax ().ToString ();
             minVal.Text = getMin ().ToString ();
 
             // Count the list elements 
@@ -348,4 +369,3 @@ namespace TSR
             }
         }
     }
-    

@@ -58,3 +58,4 @@ C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\bin\Debug\Syst
 C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\obj\Debug\TSreview.g.cs
 C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\obj\Debug\TSreview.baml
+C:\Users\ASM\source\repos\RdotNet\InternShipProject\TSRdotNet\TSR\obj\Debug\App.baml
