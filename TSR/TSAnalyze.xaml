@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TSR"
         mc:Ignorable="d"
-        Title="TSAnalyze" Height="450" Width="800"        
+        Title="TSAnalyze" Height="450" Width="800"    
+        WindowStartupLocation="CenterScreen"
         >
     <Window.Resources>
         <!--Control colors.-->
@@ -221,35 +222,38 @@
             </Setter>
         </Style>
     </Window.Resources>
+    <Border         
+        Margin="15,15,15,15"
+        >
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="100*"/>
+            </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100*"/>
-            <RowDefinition Height="100*"/>
-            <RowDefinition Height="100*"/>
-            <RowDefinition Height="100*"/>
-            <RowDefinition Height="100*"/>
-            <RowDefinition Height="100*"/>
-            <RowDefinition Height="100*"/>
-            <RowDefinition Height="100*"/>
-            <RowDefinition Height="100*"/>
-            <RowDefinition Height="100*"/>
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+            </Grid.RowDefinitions>
 
-        <StackPanel 
+            <StackPanel 
             x:Name="stackPanel_ImportBtn"
             Orientation="Vertical"
             Grid.Column="2"
@@ -257,17 +261,17 @@
             Grid.ColumnSpan="6"
             Grid.RowSpan="3"            
             >
-            <Label
+                <Label
                 Content="Prepare Selected Time Series"
                 FontFamily="Comic Sans MS" 
                 FontSize="21"
                 FontWeight="Bold"
                 HorizontalContentAlignment="Center"
                 />
-            <StackPanel
+                <StackPanel
                 Orientation="Horizontal"
                 >
-                <Path 
+                    <Path 
                     x:Name="next_ts_selected"
                     Fill="Black" 
                     Data="M 3,3 l 9,9 l -9,9 Z" 
@@ -278,7 +282,7 @@
                     Height="50"
                     VerticalAlignment="Center"         
                 />
-                <ComboBox
+                    <ComboBox
                     x:Name="headersComboList"
                     SelectionChanged="headersComboList_SelectionChanged"
                     
@@ -287,72 +291,72 @@
                     VerticalContentAlignment="Center"
                     FontSize="12" Width="420"                
                     >
-                    <ComboBoxItem 
+                        <ComboBoxItem 
                         x:Name="comboItem"
                         HorizontalAlignment="Center"
                         HorizontalContentAlignment="Center"
                         >
-                        -------- Choose a Time Series --------
-                    </ComboBoxItem>
-                </ComboBox>
-            </StackPanel>
-            <StackPanel
+                            -------- Choose a Time Series --------
+                        </ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel
                 Orientation="Horizontal"
                 HorizontalAlignment="Right"
                 Margin="30 5 25 0"
                 >
-                <Button 
+                    <Button 
                     x:Name="previousButton"
                     Content="Previous"
                     FontWeight="DemiBold"
                     Click="previousButton_Click"
                     >
-                    <Button.Resources>
-                        <Style TargetType="{x:Type ToolTip}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ToolTip}">
-                                        <Grid Margin="0,60,0,0">
-                                            <Path Data="M0 0 30 0 50 -15 70 0 100 0 100 30 0 30z" Fill="#3E82C4" Stretch="Fill"/>
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Resources>
-                    <Button.Style>
-                        <StaticResource ResourceKey="InformButton"/>
-                    </Button.Style>
-                </Button>
-                <Button 
+                        <Button.Resources>
+                            <Style TargetType="{x:Type ToolTip}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ToolTip}">
+                                            <Grid Margin="0,60,0,0">
+                                                <Path Data="M0 0 30 0 50 -15 70 0 100 0 100 30 0 30z" Fill="#3E82C4" Stretch="Fill"/>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Resources>
+                        <Button.Style>
+                            <StaticResource ResourceKey="InformButton"/>
+                        </Button.Style>
+                    </Button>
+                    <Button 
                     x:Name="confirmTS"
                     Content="Confirm"
                     FontWeight="DemiBold"
                     Click="confirmTS_Click"
                     >
-                    <Button.Resources>
-                        <Style TargetType="{x:Type ToolTip}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ToolTip}">
-                                        <Grid Margin="0,60,0,0">
-                                            <Path Data="M0 0 30 0 50 -15 70 0 100 0 100 30 0 30z" Fill="#3E82C4" Stretch="Fill"/>
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Resources>
-                    <Button.Style>
-                        <StaticResource ResourceKey="InformButton"/>
-                    </Button.Style>
-                </Button>
+                        <Button.Resources>
+                            <Style TargetType="{x:Type ToolTip}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ToolTip}">
+                                            <Grid Margin="0,60,0,0">
+                                                <Path Data="M0 0 30 0 50 -15 70 0 100 0 100 30 0 30z" Fill="#3E82C4" Stretch="Fill"/>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Resources>
+                        <Button.Style>
+                            <StaticResource ResourceKey="InformButton"/>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
 
-        <StackPanel 
+            <StackPanel 
             x:Name="stackPanel_hiddenTitle"
             Orientation="Vertical"
             Grid.Column="1"
@@ -365,7 +369,7 @@
             Width="600" Height="104"   
             Visibility="Collapsed"
             >
-            <Label 
+                <Label 
                 Content="Creating Time Series for the Selected Variable" 
                 FontSize="18" 
                 Width="600"
@@ -378,8 +382,8 @@
                 Margin="0" Height="40"
                 
                 />
-        </StackPanel>
-        <StackPanel 
+            </StackPanel>
+            <StackPanel 
             x:Name="MakeTSpanel"
             Grid.Column="1"
             Grid.ColumnSpan="8"
@@ -388,8 +392,8 @@
             Margin="0,0,0,20"
             IsEnabled="False"            
             >
-            <WrapPanel>
-                <Path 
+                <WrapPanel>
+                    <Path 
                     x:Name="next_rd_dateTime"
                     Fill="Black" 
                     Data="M 3,3 l 9,9 l -9,9 Z" 
@@ -401,9 +405,9 @@
                     VerticalAlignment="Center"     
                     Visibility="Collapsed"
                 />
-                <StackPanel
+                    <StackPanel
                     Orientation="Vertical">
-                    <RadioButton 
+                        <RadioButton 
                         x:Name="rBtn_onlyDate" 
                         Content="My time series contain only Date column." 
                         GroupName="dateTimeRadioList" 
@@ -412,17 +416,17 @@
                         Checked="rBtn_onlyDate_Checked"
                         Click="rBtn_onlyDate_Click"
                         />
-                    <RadioButton 
+                        <RadioButton 
                         x:Name="rBtn_DateTime"
                         Content="My time series contain Date and Time columns." 
                         GroupName="dateTimeRadioList" 
                         Margin="0,10" 
                         Checked="rBtn_DateTime_Checked"
                         />
-                </StackPanel>
-            </WrapPanel>
-           
-            <StackPanel
+                    </StackPanel>
+                </WrapPanel>
+
+                <StackPanel
                         x:Name="dateTime_StackPanel"
                         Grid.Row="1" 
                         Grid.RowSpan="5" 
@@ -430,25 +434,25 @@
                         Grid.ColumnSpan="3" 
                         Margin="0,5,0,0"     
                         >
-                <Separator Margin="0 0 0 0"/>
-                <Label
+                    <Separator Margin="0 0 0 0"/>
+                    <Label
                     Content="In the loaded CSV file"
                     FontWeight="Bold"
                     HorizontalContentAlignment="Left" 
                     />
-                <StackPanel
+                    <StackPanel
                     Orientation="Vertical" 
                     Margin="5"
                     >
-                    <WrapPanel 
+                        <WrapPanel 
                         Orientation="Horizontal"
                         >
-                        <Label 
+                            <Label 
                             Content="Title of the Date Column:" 
                             Foreground="Red" 
                             VerticalContentAlignment="Center"
                             />
-                        <Image 
+                            <Image 
                             x:Name="questionMarkDate"
                             Source="/TSR;component/Resources/Images/Icons/icons8-question-mark-96.png" 
                             Width="15" 
@@ -456,7 +460,7 @@
                             MouseEnter="questionMarkDate_MouseEnter"
                             MouseLeave="questionMarkDate_MouseLeave"
                             />
-                        <TextBox 
+                            <TextBox 
                             x:Name="dateColTitle"
                             Margin="0 0 0 0"
                             VerticalContentAlignment="Center"
@@ -464,13 +468,13 @@
                             Template="{StaticResource TextBoxBaseControlTemplate}" 
                             Width="460"                             
                                 />
-                    </WrapPanel>
-                    <WrapPanel>
-                        <Label 
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label 
                             Content="Title of the Time Column" 
                             Foreground="Red"
                             />
-                        <Image 
+                            <Image 
                             x:Name="questionMarkTime"
                             Source="/TSR;component/Resources/Images/Icons/icons8-question-mark-96.png" 
                             Width="15" 
@@ -478,7 +482,7 @@
                             MouseEnter="questionMarkTime_MouseEnter"
                             MouseLeave="questionMarkTime_MouseLeave"
                             />
-                        <TextBox 
+                            <TextBox 
                             x:Name="timeColTitle"
                             Margin="0 0 0 0"
                             VerticalContentAlignment="Center"
@@ -486,14 +490,14 @@
                             Template="{StaticResource TextBoxBaseControlTemplate}" 
                             Width="460" 
                             />
-                    </WrapPanel>
+                        </WrapPanel>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
 
-            <StackPanel 
+                <StackPanel 
                 x:Name="Create_CSV_btn_Panel"
                 >
-                <Button 
+                    <Button 
                     x:Name="Make_TS" 
                     Content="Make Time Series" 
                     HorizontalAlignment="Center"
@@ -502,26 +506,26 @@
                     Click="Make_TS_Click" 
                     Height="40" 
                     >
-                    <Button.Resources>
-                        <Style TargetType="{x:Type ToolTip}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ToolTip}">
-                                        <Grid Margin="0,60,0,0">
-                                            <Path Data="M0 0 30 0 50 -15 70 0 100 0 100 30 0 30z" Fill="#3E82C4" Stretch="Fill"/>
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Resources>
-                    <Button.Style>
-                        <StaticResource ResourceKey="InformButton"/>
-                    </Button.Style>
-                </Button>
+                        <Button.Resources>
+                            <Style TargetType="{x:Type ToolTip}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ToolTip}">
+                                            <Grid Margin="0,60,0,0">
+                                                <Path Data="M0 0 30 0 50 -15 70 0 100 0 100 30 0 30z" Fill="#3E82C4" Stretch="Fill"/>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Resources>
+                        <Button.Style>
+                            <StaticResource ResourceKey="InformButton"/>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
-    </Grid>
-
+        </Grid>
+    </Border>
 </Window>

@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TSR"
         mc:Ignorable="d"
-        Title="TSreview" Height="450" Width="800">
+        Title="TSreview" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        >
     <Window.Resources>
         <!--Control colors.-->
         <Color x:Key="WindowColor">#FFE8EDF9</Color>
@@ -377,6 +379,29 @@
                         IsReadOnly="True"
                        />
                 </StackPanel>
+                <Button
+                    x:Name="DescriptiveStatisticsBtn"
+                    Content="Descriptive Statistics"
+                    Click="DescriptiveStatisticsBtn_Click"
+                    >
+                    <Button.Resources>
+                        <Style TargetType="{x:Type ToolTip}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ToolTip}">
+                                        <Grid Margin="0,60,0,0">
+                                            <Path Data="M0 0 30 0 50 -15 70 0 100 0 100 30 0 30z" Fill="#3E82C4" Stretch="Fill"/>
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Style>
+                        <StaticResource ResourceKey="InformButton"/>
+                    </Button.Style>
+                </Button>
             </StackPanel>
             <!--Vertical Line: Seperator-->
             <Rectangle  

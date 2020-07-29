@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TSR.Model;
 using Path = System.IO.Path;
 
 namespace TSR
@@ -24,7 +26,7 @@ namespace TSR
     public partial class TSreview : Window
         {
         private TSAnalyze tsAnalyze;
-        private string selctedComboItem;
+        public string selctedComboItem;
         private string stsFileSelected;
         private List<Double> ts_dataValues;
         public int arima_d_order;
@@ -34,6 +36,10 @@ namespace TSR
         private int predictionNumber;
         private MainWindow mainWindow;
         private string[] headers;
+
+        public DateTime Date { get; set; }
+        public DateTime Time { get; set; }
+        public double Variable { get; set; }
 
         public TSreview ()
             {
@@ -201,7 +207,7 @@ namespace TSR
             catch (FileNotFoundException)
                 {
                 string msg = "Error# File Not Found! "+stsFile;
-                MessageBox.Show (msg);
+                MessageBox.Show (msg, "Error Occurred", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
             string line = fileReader.ReadLine(); // skip header
@@ -215,9 +221,9 @@ namespace TSR
 
                 try
                     {
-                    if (double.TryParse (values[values.Count () - 1], NumberStyles.Any, CultureInfo.CurrentCulture, out double number))
+                    if (double.TryParse (values[fieldsNr - 1], NumberStyles.Any, CultureInfo.CurrentCulture, out double number))
                         {
-                        Console.WriteLine (string.Format ("Local culture results for the parsing of {0} yielded: {1}", values[values.Count () - 1], number));
+                        Console.WriteLine (string.Format ("Local culture results for the parsing of {0} yielded: {1}", values[fieldsNr - 1], number));
                         ts.Add (number);
                         }
                     }
@@ -362,10 +368,103 @@ namespace TSR
 
             updateArimaOrders ();
 
-            ARiMAProcess process = new ARiMAProcess();
-            List<String[]> dataTS = new List<String[]>();
+            ARiMAProcess process = new ARiMAProcess(this);
+            process.ShowDialog ();
 
 
             }
+
+        private void DescriptiveStatisticsBtn_Click (object sender, RoutedEventArgs e)
+            {
+            DataTable ts_DataTable = GetTable();
+
+            new DescStat ("Insert something", ts_DataTable.TableName, "Arial", 20).ShowDialog ();
+
+            }
+
+        private DataTable GetTable ()
+            {
+            // create a DataTable for the selected time series
+            DataTable table;
+            DataRow rowTable;
+
+            // Create a new DataTable.
+            table = new DataTable ("Selected Time Series Table");
+
+            DataColumn colDate = new DataColumn("Date");
+            colDate.DataType = System.Type.GetType ("System.DateTime");
+            table.Columns.Add (colDate);
+
+            if (headers.Length > 2)
+                {
+                DataColumn colTime = new DataColumn("Time");
+                colTime.DataType = System.Type.GetType ("System.DateTime");
+                table.Columns.Add (colTime);
+                }
+
+            DataColumn colVariable = new DataColumn("Variable");
+            colVariable.DataType = System.Type.GetType ("System.Decimal");
+            table.Columns.Add (colVariable);
+
+
+            string[] lines = File.ReadAllLines(stsFileSelected);
+            lines = lines.Skip (1).ToArray ();
+            int lineNr = 1;
+            foreach (string line in lines)
+                {
+                string[] split = line.Split(',');
+                split = split.Where (r => !string.IsNullOrWhiteSpace (r)).ToArray ();
+                Console.WriteLine (stsFileSelected + ": lineNr: {0} => [{1}]", lineNr++, string.Join (" \t ", split));
+
+                DateTime dateValue;
+                DateTime timeValue = DateTime.Today;
+                decimal number;
+
+                Console.WriteLine ("Attempting to parse strings using {0} culture.", CultureInfo.CurrentCulture.Name);
+
+                if (DateTime.TryParse (split[0], out dateValue))
+                    Console.WriteLine ("  Converted '{0}' to {1} ({2}).", split[0], dateValue, dateValue.Kind);
+                else
+                    Console.WriteLine ("  Unable to parse '{0}'.", split[0]);
+
+                if (headers.Length > 2)
+                    {
+                    if (DateTime.TryParse (split[1], out timeValue))
+                        Console.WriteLine ("  Converted '{0}' to {1} ({2}).", split[1], timeValue, timeValue.Kind);
+                    else
+                        Console.WriteLine ("  Unable to parse '{0}'.", split[1]);
+
+                    if (Decimal.TryParse (split[2], out number))
+                        Console.WriteLine ("Converted '{0}' to {1}.", split[2], number);
+                    else
+                        Console.WriteLine ("Unable to convert '{0}'.", split[2]);
+
+                    }
+                else
+                    {
+                    if (Decimal.TryParse (split[1], out number))
+                        Console.WriteLine ("Converted '{0}' to {1}.", split[1], number);
+                    else
+                        Console.WriteLine ("Unable to convert '{0}'.", split[1]);
+                    }
+
+                // Populate one row with values.
+                rowTable = table.NewRow ();
+                rowTable["Date"] = dateValue;
+                if (headers.Length > 2)
+                    {
+                    rowTable["Time"] = timeValue;
+                    }
+                rowTable["Variable"] = number;
+                table.Rows.Add (rowTable);
+                }
+
+            foreach (DataRow dr in table.Rows)
+                {
+                Console.WriteLine (string.Format ("{0} {1}", dr[0], dr[1]));
+                }
+            return table;
+            }
         }
     }
+
